@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-bbd
+  labels:
+    app: apache-bbd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apache-bbd
+  template:
+    metadata:
+      labels:
+        app: apache-bbd
+    spec:
+      containers:
+        - name: apache-bbd-box
+          image: php:8.2-apache
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_HOST
+              value: "mysql-service"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: "appdb"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+          volumeMounts:
+            - name: web-content
+              mountPath: /var/www/html
+      volumes:
+        - name: web-content
+          configMap:
+            name: apache-webpage

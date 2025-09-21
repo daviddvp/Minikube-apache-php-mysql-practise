@@ -1,0 +1,28 @@
+<?php
+$host = getenv('DB_HOST');
+$port = getenv('DB_PORT');
+$dbname = getenv('DB_NAME');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASS');
+
+$conn = new mysqli($host, $user, $pass, $dbname);
+
+if ($conn->connect_error) {
+    die("<h1>Conexión fallida: " . $conn->connect_error . "</h1>");
+}
+
+echo "<h1>¡Conexión a MySQL correcta!</h1>";
+
+$result = $conn->query("SHOW TABLES");
+if ($result->num_rows > 0) {
+    echo "<h2>Tablas en la base de datos '$dbname':</h2><ul>";
+    while($row = $result->fetch_array()) {
+        echo "<li>" . $row[0] . "</li>";
+    }
+    echo "</ul>";
+} else {
+    echo "<p>No hay tablas en la base de datos.</p>";
+}
+
+$conn->close();
+?>
