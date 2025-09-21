@@ -62,6 +62,11 @@ Crear un entorno Kubernetes completo en **Minikube** que simule un escenario rea
 # Iniciar Minikube
 minikube start
 
+# Create configmap (if it don't exists)
+kubectl create configmap apache-webpage \
+  --from-file=index.php=./k8s/web/index.php \
+  -o yaml --dry-run=client > k8s/configmap/apache-webpage.yml
+
 # Crear Secret
 kubectl apply -f secrets/mysql-secret.yml
 
