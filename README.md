@@ -11,27 +11,6 @@ Crear un entorno Kubernetes completo en **Minikube** que simule un escenario rea
 
 ---
 
-## 📂 Estructura de archivos
-k8s/
-├─ secrets/
-│ └─ mysql-secret.yml # Credenciales de MySQL
-├─ pvc/
-│ └─ mysql-pvc.yml # Volumen persistente de MySQL
-├─ deployments/
-│ ├─ mysql-deployment.yml # Despliegue de MySQL
-│ └─ apache-deployment.yml # Despliegue de Apache + PHP
-├─ services/
-│ ├─ mysql-service.yml # Servicio ClusterIP para MySQL
-│ └─ apache-service.yml # Servicio NodePort para Apache
-├─ configmap/
-│ └─ apache-webpage.yml # Código web (index.php)
-├─ web/
-└─ index.php # Página de prueba que conecta a MySQL
-
----
-
----
-
 ## 🔹 Componentes principales
 
 1. **MySQL Deployment**
@@ -74,11 +53,6 @@ k8s/
 4. `index.php` usa variables de entorno (desde Secret) para conectarse al Service de MySQL.
 5. Apache Service NodePort permite abrir la web de prueba en el navegador.
 6. ConfigMap asegura que el contenido web esté separado del Deployment.
-
----
-
-## 🛠 Comandos clave de despliegue
-
 
 ---
 
